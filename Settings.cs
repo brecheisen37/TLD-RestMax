@@ -19,8 +19,14 @@ namespace RestMax
                 field.Name == nameof(SkipBedRoll) ||
                 field.Name == nameof(InvertCrouch))
             {
-                Settings.RefreshFields();
+                RefreshFields();
             }
+        }
+        public void RefreshFields()
+        {
+            SetFieldVisible(nameof(SkipMenu), Settings.options.EnableMod);
+            SetFieldVisible(nameof(SkipBedRoll), Settings.options.EnableMod && Settings.options.SkipMenu);
+            SetFieldVisible(nameof(InvertCrouch), Settings.options.EnableMod && Settings.options.SkipMenu && Settings.options.SkipBedRoll);
         }
 
 
@@ -54,15 +60,9 @@ namespace RestMax
         {
             options = new SettingsMain();
             options.AddToModSettings("Always Sleep Maximum");
-            Settings.RefreshFields();
+            Settings.options.RefreshFields();
         }
 
-        public static void RefreshFields()
-        {
-            options.SetFieldVisible("Skip Rest Menu", Settings.options.EnableMod == true);
-            options.SetFieldVisible("Skip Rest Menu for Bedrolls", Settings.options.SkipMenu == true);
-            options.SetFieldVisible("Invert Bedroll Crouch Interaction", Settings.options.SkipBedRoll == true);
-        }
     }
 
 
