@@ -14,6 +14,8 @@ Also includes option to skip the sleep menu when selecting a bed.
 If skipping the sleep menu on bedrolls crouch can be used to either sleep or pick up the bed roll.
 
 ## Changelog
+### 2.0.1
+- fixed issue with 10 hour limit setting that would make you only sleep 83% of the needed amount
 ### 2.0.0
 - full rewrite
 - enforcing sleep hours now working properly
