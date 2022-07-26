@@ -15,6 +15,7 @@ namespace RestMax
         protected override void OnChange(FieldInfo field, object oldValue, object newValue)
         {
             if (field.Name == nameof(EnableMod) ||
+                field.Name == nameof(ForceMod) ||
                 field.Name == nameof(SkipMenu) ||
                 field.Name == nameof(SkipBedRoll) ||
                 field.Name == nameof(InvertCrouch))
@@ -24,9 +25,10 @@ namespace RestMax
         }
         public void RefreshFields()
         {
-            SetFieldVisible(nameof(SkipMenu), Settings.options.EnableMod);
-            SetFieldVisible(nameof(SkipBedRoll), Settings.options.EnableMod && Settings.options.SkipMenu);
-            SetFieldVisible(nameof(InvertCrouch), Settings.options.EnableMod && Settings.options.SkipMenu && Settings.options.SkipBedRoll);
+            SetFieldVisible(nameof(ForceMod), Settings.options.EnableMod);
+            SetFieldVisible(nameof(SkipMenu), Settings.options.EnableMod && Settings.options.ForceMod);
+            SetFieldVisible(nameof(SkipBedRoll), Settings.options.EnableMod && Settings.options.ForceMod && Settings.options.SkipMenu);
+            SetFieldVisible(nameof(InvertCrouch), Settings.options.EnableMod && Settings.options.ForceMod && Settings.options.SkipMenu && Settings.options.SkipBedRoll);
         }
 
 
@@ -34,8 +36,12 @@ namespace RestMax
         [Section("General")]
 
         [Name("Enable Mod")]
-        [Description("Always Sleep until Fully Rested.")]
+        [Description("Set Sleep Time to the Time needed to be Fully Rested.")]
         public bool EnableMod = true;
+
+        [Name("Enforce Duration")]
+        [Description("Always Sleep until Fully Rested, without the option to sleep less time. Rest as resource prevents sleeping longer.")]
+        public bool ForceMod = true;
 
         [Name("Skip Rest Menu")]
         [Description("Sleep Immediately by Selecting Bed")]
