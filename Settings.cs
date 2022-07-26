@@ -16,6 +16,7 @@ namespace RestMax
         {
             if (field.Name == nameof(EnableMod) ||
                 field.Name == nameof(ForceMod) ||
+                field.Name == nameof(Limit10) ||
                 field.Name == nameof(SkipMenu) ||
                 field.Name == nameof(SkipBedRoll) ||
                 field.Name == nameof(InvertCrouch))
@@ -26,6 +27,7 @@ namespace RestMax
         public void RefreshFields()
         {
             SetFieldVisible(nameof(ForceMod), Settings.options.EnableMod);
+            SetFieldVisible(nameof(Limit10), Settings.options.EnableMod);
             SetFieldVisible(nameof(SkipMenu), Settings.options.EnableMod && Settings.options.ForceMod);
             SetFieldVisible(nameof(SkipBedRoll), Settings.options.EnableMod && Settings.options.ForceMod && Settings.options.SkipMenu);
             SetFieldVisible(nameof(InvertCrouch), Settings.options.EnableMod && Settings.options.ForceMod && Settings.options.SkipMenu && Settings.options.SkipBedRoll);
@@ -38,6 +40,10 @@ namespace RestMax
         [Name("Enable Mod")]
         [Description("Set Sleep Time to the Time needed to be Fully Rested.")]
         public bool EnableMod = true;
+
+        [Name("Limit Sleep to 10 hours")]
+        [Description("Won't ever sleep more than hours.")]
+        public bool Limit10 = false;
 
         [Name("Enforce Duration")]
         [Description("Always Sleep until Fully Rested, without the option to sleep less time. Rest as resource prevents sleeping longer.")]

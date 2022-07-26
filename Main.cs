@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,15 +29,23 @@ namespace RestMax
         int hourstosleep = 1;
         void SleeporWait()
         {
-            if (AllowedtoSleep())
+            if (!RestasResource())
             {
-                InterfaceManager.m_Panel_Rest.DoRest(hourstosleep, true);
+                InterfaceManager.m_Panel_Rest.DoRest(hourstosleep, false);
             }
             else
             {
-                InterfaceManager.m_Panel_Rest.DoPassTime(1);
-                InterfaceManager.m_Panel_Rest.Enable(false);
-            }
+                if (AllowedtoSleep())
+                {
+                    InterfaceManager.m_Panel_Rest.DoRest(hourstosleep, true);
+                }
+                else
+                {
+                    InterfaceManager.m_Panel_Rest.DoPassTime(1);
+                    InterfaceManager.m_Panel_Rest.Enable(false);
+                }
+            }        
+
         }
 
         void HandleBed()
@@ -84,7 +92,8 @@ namespace RestMax
             int maxhours;
             if (Settings.options.Limit10) maxhours = 10;
             else maxhours = 12;
-            hourstosleep = Mathf.CeilToInt(maxhours * GameManager.GetFatigueComponent().GetNormalizedFatigue());
+            hourstosleep = Mathf.CeilToInt(12 * GameManager.GetFatigueComponent().GetNormalizedFatigue());
+            if(hourstosleep > maxhours) hourstosleep = maxhours;
             if (!InterfaceManager.m_Panel_Rest.m_PassTimeOnlyObject.active) InterfaceManager.m_Panel_Rest.m_SleepHours = hourstosleep;
         }
 
