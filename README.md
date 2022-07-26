@@ -17,6 +17,7 @@ If skipping the sleep menu on bedrolls crouch can be used to either sleep or pic
 ### 2.0.0
 - full rewrite
 - enforcing sleep hours now working properly
+- additional options
 
 ### 1.0.0
 - Release
