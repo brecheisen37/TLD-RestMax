@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,7 +81,10 @@ namespace RestMax
 
         void EnforceHourstoSleep()
         {
-            hourstosleep = Mathf.CeilToInt(12 * GameManager.GetFatigueComponent().GetNormalizedFatigue());
+            int maxhours;
+            if (Settings.options.Limit10) maxhours = 10;
+            else maxhours = 12;
+            hourstosleep = Mathf.CeilToInt(maxhours * GameManager.GetFatigueComponent().GetNormalizedFatigue());
             if (!InterfaceManager.m_Panel_Rest.m_PassTimeOnlyObject.active) InterfaceManager.m_Panel_Rest.m_SleepHours = hourstosleep;
         }
 
